@@ -12,7 +12,7 @@ This is a Laravel REST API for managing books and favorites, with Google Books A
 
 1.  **Clone the repository**
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/MoncefBlk/book_finder.git
     cd book_finder
     ```
 
