@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -32,6 +33,14 @@ return Application::configure(basePath: dirname(__DIR__))
                     'message' => 'Too Many Requests.',
                     'retry_after' => $e->getHeaders()['Retry-After'] ?? null
                 ], 429);
+            }
+        });
+
+        $exceptions->render(function (AccessDeniedHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'This action is unauthorized.'
+                ], 403);
             }
         });
     })->create();
