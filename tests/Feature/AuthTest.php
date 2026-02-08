@@ -118,7 +118,7 @@ class AuthTest extends TestCase
 
     public function test_unauthenticated_user_cannot_access_protected_routes()
     {
-        $response = $this->getJson('/api/v1/user');
+        $response = $this->getJson('/api/v1/favorites');
 
         $response->assertStatus(401)
                  ->assertJson([

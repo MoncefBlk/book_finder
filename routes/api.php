@@ -12,9 +12,6 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        })->name('user');
 
         // Book Management
         Route::get('/books', [BookController::class, 'index'])->name('books.index');
