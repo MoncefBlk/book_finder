@@ -18,6 +18,9 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
         // Book Management
         Route::get('/books', [BookController::class, 'index'])->name('books.index');
+        Route::get('/search', [BookController::class, 'search'])
+            ->name('books.search')
+            ->middleware('throttle:30,1');
         Route::post('/books/import', [BookController::class, 'import'])->name('books.import');
 
         // Favorites Management

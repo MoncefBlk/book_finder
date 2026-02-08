@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Actions\Book\GetAllBooksAction;
 use App\Actions\Book\ImportBookAction;
+use App\Actions\Book\SearchBooksAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\ImportBookRequest;
+use App\Http\Requests\Api\V1\SearchBooksRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -20,6 +22,29 @@ class BookController extends Controller
         $books = $getAllBooksAction->execute($perPage);
 
         return response()->json($books);
+    }
+
+    /**
+     * Search for books via Google Books API
+     */
+    public function search(SearchBooksRequest $request, SearchBooksAction $searchBooksAction): JsonResponse
+    {
+        $query = $request->input('query');
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 10);
+        $startIndex = ($page - 1) * $perPage;
+
+        $data = $searchBooksAction->execute($query, $startIndex, $perPage);
+        
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            $data['items'],
+            $data['totalItems'],
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return response()->json($paginator);
     }
 
     /**
