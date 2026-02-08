@@ -52,9 +52,9 @@ class BookController extends Controller
      */
     public function import(ImportBookRequest $request, ImportBookAction $importBookAction): JsonResponse
     {
-        $volumeInfo = $request->input('volumeInfo') ?? [];
+        $data = $request->validated();
         
-        $book = $importBookAction->execute($volumeInfo);
+        $book = $importBookAction->execute($data);
 
         return response()->json($book, 201);
     }

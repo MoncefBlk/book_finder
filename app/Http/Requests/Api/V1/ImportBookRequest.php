@@ -22,29 +22,10 @@ class ImportBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'volumeInfo' => ['required', 'array', new \App\Rules\RequiredTitleOrIdentifier],
-            'volumeInfo.title' => 'nullable|string',
-            'volumeInfo.authors' => 'nullable|array',
-            'volumeInfo.industryIdentifiers' => ['nullable', 'array', new \App\Rules\UniqueBookIdentifier],
-            'volumeInfo.industryIdentifiers.*.identifier' => 'distinct:ignore_case',
-            'volumeInfo.imageLinks.thumbnail' => 'nullable|string',
-        ];
-    }
-
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array<string, string>
-     */
-    public function attributes(): array
-    {
-        return [
-            'volumeInfo' => 'book information',
-            'volumeInfo.title' => 'title',
-            'volumeInfo.authors' => 'authors',
-            'volumeInfo.industryIdentifiers' => 'identifiers',
-            'volumeInfo.industryIdentifiers.*.identifier' => 'identifier value',
-            'volumeInfo.imageLinks.thumbnail' => 'thumbnail',
+            'title' => 'required_without:isbn|string|nullable',
+            'author' => 'nullable|string',
+            'isbn' => 'required_without:title|string|nullable|unique:books,isbn',
+            'cover_url' => 'nullable|string',
         ];
     }
 }
