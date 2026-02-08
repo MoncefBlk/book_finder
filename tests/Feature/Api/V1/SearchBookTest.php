@@ -40,8 +40,7 @@ class SearchBookTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonPath('data.0.title', 'Test Book')
-            ->assertJsonPath('data.0.identifiers.0.type', 'ISBN_13')
-            ->assertJsonPath('data.0.identifiers.0.identifier', '1234567890123');
+            ->assertJsonPath('data.0.isbn', '1234567890123');
     }
 
     public function test_non_admin_cannot_search_books(): void

@@ -52,19 +52,25 @@ class GoogleBooksService
                 $author = is_array($authors) ? implode(', ', $authors) : $authors;
 
                 $identifiers = $volumeInfo['industryIdentifiers'] ?? [];
-                $formattedIdentifiers = array_map(function ($identifier) {
-                    return [
-                        'type' => $identifier['type'],
-                        'identifier' => $identifier['identifier'],
-                    ];
-                }, $identifiers);
+                $isbn = null;
+
+                foreach ($identifiers as $identifier) {
+                    if (($identifier['type'] ?? '') === 'ISBN_13') {
+                        $isbn = $identifier['identifier'] ?? null;
+                        break;
+                    }
+                }
+
+                if (!$isbn && !empty($identifiers)) {
+                    $isbn = $identifiers[0]['identifier'] ?? null;
+                }
 
                 $coverUrl = $volumeInfo['imageLinks']['thumbnail'] ?? null;
 
                 return [
                     'title' => $volumeInfo['title'] ?? 'Unknown Title',
                     'author' => $author,
-                    'identifiers' => $formattedIdentifiers,
+                    'isbn' => $isbn,
                     'cover_url' => $coverUrl,
                 ];
             }, $items);
