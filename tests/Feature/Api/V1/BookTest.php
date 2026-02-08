@@ -15,7 +15,7 @@ class BookTest extends TestCase
 
     public function test_can_import_book_from_google_api_structure(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
         $payload = [
             'volumeInfo' => [
@@ -40,7 +40,7 @@ class BookTest extends TestCase
         ]);
         
         $book = Book::where('title', 'Harry Potter and the Philosopher\'s Stone')->first();
-        $this->assertEquals(['J. K. Rowling'], $book->authors);
+        $this->assertEquals('J. K. Rowling', $book->author);
         $this->assertEquals('http://example.com/cover.jpg', $book->cover_url);
     }
 
@@ -77,7 +77,7 @@ class BookTest extends TestCase
 
     public function test_import_fails_without_title_and_isbn(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
         $payload = [
             'volumeInfo' => [
@@ -93,7 +93,7 @@ class BookTest extends TestCase
 
     public function test_import_fails_with_duplicate_identifier(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
         
         $payload1 = [
             'volumeInfo' => [
@@ -122,7 +122,7 @@ class BookTest extends TestCase
 
     public function test_can_import_with_isbn_only(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['is_admin' => true]);
 
         $payload = [
             'volumeInfo' => [

@@ -31,11 +31,7 @@ class UniqueBookIdentifier implements ValidationRule
         }
         
         $exists = Book::where(function ($query) use ($identifiersToCheck) {
-            foreach ($identifiersToCheck as $id) {
-                $query->orWhere(function ($subQ) use ($id) {
-                    $subQ->whereJsonContains('isbn', [['identifier' => $id]]);
-                });
-            }
+            $query->whereIn('isbn', $identifiersToCheck);
         })->exists();
 
         if ($exists) {

@@ -13,15 +13,12 @@ class Book extends Model
 
     protected $fillable = [
         'title',
-        'authors',
+        'author',
         'isbn',
         'cover_url',
     ];
 
-    protected $casts = [
-        'authors' => 'array',
-        'isbn' => 'array',
-    ];
+    protected $casts = [];
 
     public function users(): BelongsToMany
     {

@@ -18,11 +18,8 @@ class BookFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(3),
-            'authors' => [$this->faker->name, $this->faker->name],
-            'isbn' => [
-                ['type' => 'ISBN_13', 'identifier' => $this->faker->isbn13()],
-                ['type' => 'ISBN_10', 'identifier' => $this->faker->isbn10()],
-            ],
+            'author' => $this->faker->name,
+            'isbn' => $this->faker->isbn13(),
             'cover_url' => $this->faker->imageUrl(400, 600, 'books', true),
         ];
     }
