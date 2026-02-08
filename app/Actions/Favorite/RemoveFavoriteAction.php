@@ -2,6 +2,7 @@
 
 namespace App\Actions\Favorite;
 
+use App\Models\Book;
 use App\Models\User;
 use App\Services\FavoriteService;
 
@@ -11,8 +12,8 @@ class RemoveFavoriteAction
     {
     }
 
-    public function execute(User $user, int $bookId): void
+    public function execute(User $user, Book $book): void
     {
-        $this->favoriteService->removeFavorite($user, $bookId);
+        $this->favoriteService->removeFavorite($user, $book);
     }
 }

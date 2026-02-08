@@ -25,7 +25,7 @@ Route::prefix('v1')->name('v1.')->group(function () {
 
         // Favorites Management
         Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
-        Route::post('/favorites/{book_id}', [FavoriteController::class, 'store'])->name('favorites.store');
-        Route::delete('/favorites/{book_id}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+        Route::post('/favorites/{book}', [FavoriteController::class, 'store'])->name('favorites.store');
+        Route::delete('/favorites/{book}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
     });
 });

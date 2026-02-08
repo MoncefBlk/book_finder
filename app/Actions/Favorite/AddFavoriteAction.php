@@ -2,6 +2,7 @@
 
 namespace App\Actions\Favorite;
 
+use App\Models\Book;
 use App\Models\User;
 use App\Services\FavoriteService;
 
@@ -11,8 +12,8 @@ class AddFavoriteAction
     {
     }
 
-    public function execute(User $user, int $bookId): void
+    public function execute(User $user, Book $book): void
     {
-        $this->favoriteService->addFavorite($user, $bookId);
+        $this->favoriteService->addFavorite($user, $book);
     }
 }

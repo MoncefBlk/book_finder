@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -12,13 +13,13 @@ class FavoriteService
         return $user->books()->paginate($perPage);
     }
 
-    public function addFavorite(User $user, int $bookId): void
+    public function addFavorite(User $user, Book $book): void
     {
-        $user->books()->syncWithoutDetaching([$bookId]);
+        $user->books()->syncWithoutDetaching([$book->id]);
     }
 
-    public function removeFavorite(User $user, int $bookId): void
+    public function removeFavorite(User $user, Book $book): void
     {
-        $user->books()->detach($bookId);
+        $user->books()->detach($book->id);
     }
 }

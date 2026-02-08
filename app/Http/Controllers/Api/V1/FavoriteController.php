@@ -6,6 +6,7 @@ use App\Actions\Favorite\AddFavoriteAction;
 use App\Actions\Favorite\GetFavoritesAction;
 use App\Actions\Favorite\RemoveFavoriteAction;
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -25,10 +26,10 @@ class FavoriteController extends Controller
     /**
      * Add a book to user’s favorites
      */
-    public function store(Request $request, int $bookId, AddFavoriteAction $addFavoriteAction): JsonResponse
+    public function store(Request $request, Book $book, AddFavoriteAction $addFavoriteAction): JsonResponse
     {
         
-        $addFavoriteAction->execute($request->user(), $bookId);
+        $addFavoriteAction->execute($request->user(), $book);
 
         return response()->json(['message' => 'Book added to favorites']);
     }
@@ -36,9 +37,9 @@ class FavoriteController extends Controller
     /**
      * Remove a book from favorites
      */
-    public function destroy(Request $request, int $bookId, RemoveFavoriteAction $removeFavoriteAction): JsonResponse
+    public function destroy(Request $request, Book $book, RemoveFavoriteAction $removeFavoriteAction): JsonResponse
     {
-        $removeFavoriteAction->execute($request->user(), $bookId);
+        $removeFavoriteAction->execute($request->user(), $book);
 
         return response()->json(['message' => 'Book removed from favorites']);
     }
